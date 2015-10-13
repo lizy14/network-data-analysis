@@ -1,0 +1,19 @@
+\section{初期报告} 
+\subsection{组队情况}
+个人。以下是成员名单：李肇阳 2014013432
+
+\subsection{数据采集}
+自行采集数据。编写爬虫从豆瓣电影\footnote{http://movie.douban.com/}网页上抓取电影的基本信息、用户对电影的评价和评论。
+
+构建正权无向图：结点表示电影，边权表示两部电影的喜好人群的相似程度（以给出相近评分的用户比例等表示）。
+
+\subsection{分析项目}
+
+\paragraph{最短路径}由于权值为正，可采用复杂性较低的dijkstra算法。
+
+\paragraph{连通分量}以结点所有关联边的权之和进行过滤。
+
+\paragraph{社群结构}据此可不依赖已有知识、自动化地对电影进行分类。
+
+\subsection{可视化}
+计划使用sigmajs\footnote{http://sigmajs.org/}进行结果的可视化展现。这是一个专门做图的绘制的JavaScript库，看起来比d3.js\footnote{http://d3js.org/}更加轻便。
