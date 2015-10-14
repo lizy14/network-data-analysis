@@ -3,13 +3,22 @@ import http.client
 import json
 import threading
 import os
+import time
 
 def getPage(movieID, startID):
-    # conn = http.client.HTTPConnection("movie.douban.com")
-    conn = http.client.HTTPConnection("localhost", 1080)
-    conn.set_tunnel("movie.douban.com")
+    conn = http.client.HTTPConnection("movie.douban.com")
+    # conn = http.client.HTTPConnection("localhost", 1080)
+    # conn.set_tunnel("movie.douban.com")
     try:
-        conn.request("GET","/subject/%d/reviews?start=%d&filter=&limit=20"%(movieID, startID))
+        conn.request("GET","/subject/%d/reviews?start=%d&filter=&limit=20"%(movieID, startID),headers={ 
+            "Accept": "text/html, application/xhtml+xml, image/jxr, */*",
+
+            "Accept-Language": "zh-Hans-CN, zh-Hans; q=0.8, en-US; q=0.5, en; q=0.3",
+            "Connection": "Keep-Alive",
+            "Cookie": "bid=Dz6aeVd3SFk; _pk_id.100001.4cf6=0b5f6e59908ef738.1444804967.1.1444804967.1444804967.; _pk_ses.100001.4cf6=*",
+            "Host": "movie.douban.com",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36 Edge/12.10240"
+        })
     except:
         print('Connection Failed')
         conn.close()
@@ -18,7 +27,7 @@ def getPage(movieID, startID):
     resp = conn.getresponse()
     
     if resp.status==200:
-        page = str(resp.read(), 'UTF-8')
+        page = str(resp.read(), 'UTF-8', 'ignore')
         conn.close()
         return page
     else:
@@ -55,9 +64,10 @@ def getReviews(movieID):
         if(not startID):
             break;
         startID = int(startID.group(1))
-        # print("Loading %d: %d of %d" % (movieID, startID, numberOfReviews))
+        print("Loading %d: %d of %d" % (movieID, startID, numberOfReviews))
         page = getPage(movieID, startID)
         reviews += parsePage(page)
+        time.sleep(10)
 
     print("Finishing %d" % movieID)
     return reviews
@@ -87,7 +97,7 @@ def main():
     
     # cut movieList into several parts for multi-threading
     numberOfMovies = len(movieList)
-    n = 8 # number of threads
+    n = 1 # number of threads
     j = numberOfMovies//n  
     k = numberOfMovies%n 
     subLists = []
