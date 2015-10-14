@@ -1,13 +1,12 @@
-import re
+﻿import re
 import http.client
-
 import json
-
+import threading
 
 def getPage(movieID, startID):
     conn = http.client.HTTPConnection("movie.douban.com")
     try:
-        conn.request("GET","/subject/%d/reviews?start=%d&filter=&score=1&limit=20"%(movieID, startID))
+        conn.request("GET","/subject/%d/reviews?start=%d&filter=&limit=20"%(movieID, startID))
     except:
         print('Connection Failed')
         conn.close()
@@ -37,15 +36,26 @@ def parsePage(html):
         return results
 
 def getReviews(movieID):
+    print("Starting %d" % movieID)
     reviews = []
-    page0 = getPage(movieID, 0)
-    numberOfReviews = (re.search('<span class="total">\(共 (\d+) 条\)</span>', page0))
+    
+    page = getPage(movieID, 0)
+    
+    numberOfReviews = (re.search('<span class="total">\(共 (\d+) 条\)</span>', page))
     numberOfReviews = numberOfReviews.group(1) if numberOfReviews else 0
     numberOfReviews = int(numberOfReviews)
-    reviews += parsePage(page0)
-    for startID in range(27, numberOfReviews+1, 27):
+    
+    reviews += parsePage(page)
+    
+    while 1:
+        startID = re.search('<a href="\?start=(\d+)&amp;filter=&amp;limit=20" data-page="" class="next">后一页</a>',page)
+        print(startID)
+        if(not startID):
+            break;
+        startID = int(startID.group(1))
         print("Loading %d: %d of %d" % (movieID, startID, numberOfReviews))
-        reviews += parsePage(getPage(movieID, startID))
+        page = getPage(movieID, startID)
+        reviews += parsePage(page)
     return reviews
     
     
@@ -54,11 +64,33 @@ def doMovie(movieID):
     f.write(json.dumps(getReviews(movieID), indent=1))
     f.close()
 
+def doSubList(subList):
+    for movie in subList:
+        doMovie(int(movie['id']))
 def main():
     f = open("movielist.json")
     movieList = json.loads(filter(f.read()))
-    for movie in movieList:
-        print(movie)
-        doMovie(int(movie['id']))
+    f.close()
+    # movieList = movieList[100:108]
+    
+    # cut movieList into several parts for multi-threading
+    numberOfMovies = len(movieList)
+    n = 4 # number of threads
+    j = numberOfMovies//n  
+    k = numberOfMovies%n 
+    subLists = []
+    for i in range(0,(n-1)*j,j):
+        subLists.append(movieList[i:i+j])  
+    subLists.append(movieList[(n-1)*j:])
+    
+    threads = []
+    for subList in subLists:
+        threads.append(threading.Thread(target=doSubList,args=[subList]))
+    for t in threads:
+        t.setDaemon(True)
+        t.start()
+    
+    for t in threads:
+        t.join()
 
 main()
