@@ -74,7 +74,7 @@ def getReviews(movieID):
     
     
 def doMovie(movieID):
-    filename = "output/%d.json" % movieID
+    filename = "data/%d.json" % movieID
     if(os.path.isfile(filename)):
         print("Jumping %d" % movieID)
         return
@@ -91,7 +91,7 @@ def doSubList(subList):
     for movie in subList:
         doMovie(int(movie['id']))
 def main():
-    f = open("movielist.json")
+    f = open("data/movielist.json")
     movieList = json.loads(filter(f.read()))
     f.close()
     
