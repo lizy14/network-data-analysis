@@ -1,6 +1,8 @@
 import json
 import os
 
+totals = {}
+
 # userID as key, a list of {movies, score} as value
 def makeUserList():
     movieList = json.load(open("data/movielist.json"))
@@ -14,6 +16,8 @@ def makeUserList():
         filename = "data/%s.json" % movieID
         if(os.path.isfile(filename)):
             reviews = json.load(open(filename))
+            totals[movieID] = dict()
+            totals[movieID]['numberOfReviews'] = len(reviews)
             for review in reviews:
                 if(review['user'] not in users):
                     users[review['user']]=[]
@@ -29,12 +33,24 @@ def makeUserList():
     
     
 def getKeyName(idA, idB):
+    
     list = [idA, idB]
     list.sort()
-    return "%s,%s" % (list[0],list[1])
+    return "%s,%s:%s,%s" % (list[0],list[1],totals[list[0]],totals[list[1]])
     
 # edges
 def makeGraph(userList):
+    movieList = json.load(open("data/movielist.json"))
+
+    for movie in movieList:
+        movieID = movie['id'];
+        filename = "data/%s.json" % movieID
+        if(os.path.isfile(filename)):
+            reviews = json.load(open(filename))
+            totals[movieID] = len(reviews)
+    
+    print("Counting %s movies" % len(totals))
+            
     graph = {}
     nUsers = {}
     print("Counting %d users" % len(userList))
