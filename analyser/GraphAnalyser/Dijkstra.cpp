@@ -84,18 +84,19 @@ void Graph::printAllShortestPaths(std::ostream& s){
             if(i<=j) continue;
 
             int endingPoint = i;
-            s << j << " to " << i << ": ";
+            s << actualNodeID[j] << "-" << actualNodeID[i] << "(" << j << "-" << i << "): ";
             int length = getPathLength(endingPoint);
             if(length>=Graph::INFINITY){
                 s << "NO PATH\n";
                 continue;
             }
-            s << startingPoint << "-";
+            s << length << '\n';
+            s << actualNodeID[startingPoint] << "-";
             std::vector<int> path = getPath(endingPoint);
-            for(int i=0; i<path.size(); i++){
-                s << path[i] << '-';
+            for(auto i : path){
+                s << actualNodeID[i] << '-';
             }
-            s << endingPoint << ' ' << length << '\n';
+            s << actualNodeID[endingPoint] << '\n';
         }
     }
 }

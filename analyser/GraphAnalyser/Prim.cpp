@@ -63,9 +63,8 @@ void Graph::printTree(std::ostream& s){
 
     std::sort(T.begin(), T.end());
     s << total << '\n';
-    for(int j=0; j<T.size(); j++){
-        Edge &i = T[j];
-        s << i.a << '-' << i.b << ' ';
+    for(auto i : T){
+        s << actualNodeID[i.a] << '-' << actualNodeID[i.b] << ' ';
     }
     s << '\n';
 }

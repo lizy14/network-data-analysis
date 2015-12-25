@@ -12,12 +12,14 @@
 #include <vector>
 #include <set>
 #include <stack>
+#include <map>
 #include <algorithm>
 #include <iostream>
 
 
-typedef int weight;
-typedef int nodeID;
+typedef int weight;  //边权值
+typedef int nodeID;  //程序内部的节点标识，范围 [0, n)
+typedef int actualID;//用户输入的实际的节点标识，如各种代号、代码，范围远比 [0, n) 宽广
 
 struct Edge{
     nodeID a, b;
@@ -29,12 +31,17 @@ class Graph{
 private:
     int nEdges, nVertexes;
     std::vector<std::vector<weight> > matrixAdjacency; //邻接矩阵
-public:
     static const weight INFINITY = 1000000/2;
 
+    //translation between actual node identifier and internal nodeID
+    nodeID cntAssignedNodes;
+    std::vector<actualID> actualNodeID;
+    std::map<actualID, nodeID> map;
+    
 
 
 public:
+    void insertEdge(actualID start, actualID end, weight w);//takes actual ID, handles translation
     weight& getWeight(nodeID start, nodeID end){
         return matrixAdjacency[start][end];
     }
@@ -42,7 +49,8 @@ public:
     void printMatrix(std::ostream&);
     Graph():
         nEdges(0),
-        nVertexes(0){}
+        nVertexes(0),
+        cntAssignedNodes(0){}
     ~Graph(){}
 
 

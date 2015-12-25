@@ -8,7 +8,30 @@
 »·¡¡¾³: Visual Studio 2012 (MSVC++ 11.0)
 */
 #include "Graph.h"
+void Graph::insertEdge(actualID start, actualID end, weight w){
+    //modifies `actualNodeID[]`, `cntAssignedNodes`, `matrixAdjacency[][]`
+    int startID, endID;
 
+    auto startIt = map.find(start);
+    if(startIt == map.end()){
+        actualNodeID[cntAssignedNodes] = start;
+        startID  = cntAssignedNodes;
+        map[start] = cntAssignedNodes++;
+    }else{
+        startID = startIt->second;
+    }
+    auto endIt = map.find(end);
+    if(endIt == map.end()){
+        actualNodeID[cntAssignedNodes] = end;
+        endID = cntAssignedNodes;
+        map[end] = cntAssignedNodes++;
+    }else{
+        endID = endIt->second;
+    }
+    matrixAdjacency[startID][endID] = w;
+    matrixAdjacency[endID][startID] = w;
+    return;
+}
 void Graph::printMatrix(std::ostream& s){
     s << "Matrix" << std::endl;
     for(int i=0; i<nVertexes; i++){
@@ -24,6 +47,7 @@ void Graph::read(std::istream& s){
 
     //make an n*n matrix
     matrixAdjacency.resize(nVertexes);
+    actualNodeID.resize(nVertexes);
 
     for(auto& i : matrixAdjacency){
         i.resize(nVertexes, INFINITY);
@@ -32,8 +56,6 @@ void Graph::read(std::istream& s){
     int _1, _2, _3;
     for(int i=0; i<nEdges; i++){
         s >> _1 >> _2 >> _3;
-        //undirected edge.
-        getWeight(_1, _2) = _3;
-        getWeight(_2, _1) = _3;
+        insertEdge(_1,_2,_3);
     }
 }
