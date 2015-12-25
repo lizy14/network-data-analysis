@@ -13,21 +13,41 @@
 #include "Graph.h"
 
 using namespace std;
+#define DEBUG_TIMING
+int test(std::istream& ins, std::ostream& outs){
+#ifdef DEBUG_TIMING
+    system("PrintDateAndTime");
+#endif
+    cout << "Loading graph...";
 
-int test(std::istream& s){
     Graph graph;
-    graph.read(s);
+    graph.read(ins);
 
+#ifdef DEBUG_TIMING
+    system("PrintDateAndTime");
+#endif
+    cout << "Generating minimal spanning tree...";
 
-    cout << "Minimal spanning tree:\n";
-    graph.printMinimalSpanningTree(std::cout);
+    outs << "Minimal spanning tree:\n";
+    graph.printMinimalSpanningTree(outs);
+    
+#ifdef DEBUG_TIMING
+    system("PrintDateAndTime");
+#endif
+    cout << "Calculating shortest graph...";
 
-    cout << "Shortest path:\n";
-    graph.printAllShortestPaths(std::cout);
+    outs << "Shortest path:\n";
+    graph.printAllShortestPaths(outs);
+
+#ifdef DEBUG_TIMING
+    system("PrintDateAndTime");
+#endif
+    cout << "All done.";
 
     return 0;
 }
 int main(){
-    std::ifstream file("input.txt");
-    return test(file) || system("pause");
+    std::ifstream infile("input.txt");
+    std::ofstream outfile("output.txt");
+    return test(infile, outfile) || system("pause");
 }

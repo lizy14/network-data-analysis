@@ -8,9 +8,12 @@
 »·¡¡¾³: Visual Studio 2012 (MSVC++ 11.0)
 */
 #include "Graph.h"
+
+const weight Graph::INFINITY = 100000;
+
 void Graph::insertEdge(actualID start, actualID end, weight w){
     //modifies `actualNodeID[]`, `cntAssignedNodes`, `matrixAdjacency[][]`
-    int startID, endID;
+    nodeID startID, endID;
 
     auto startIt = map.find(start);
     if(startIt == map.end()){
@@ -53,7 +56,8 @@ void Graph::read(std::istream& s){
         i.resize(nVertexes, INFINITY);
     }
 
-    int _1, _2, _3;
+    nodeID _1, _2;
+    weight _3;
     for(int i=0; i<nEdges; i++){
         s >> _1 >> _2 >> _3;
         insertEdge(_1,_2,_3);

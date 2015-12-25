@@ -51,13 +51,11 @@ void Graph::prim(){
 
 void Graph::printTree(std::ostream& s){
     weight total = 0;
-    for(int j=0; j<T.size(); j++){
-        Edge &i = T[j];
+    for(auto i : T){
         total += getWeight(i.a, i.b);
         if(i.a > i.b){
             nodeID t;
             t = i.a, i.a = i.b, i.b = t;
-            int x = 1;
         }
     }
 
