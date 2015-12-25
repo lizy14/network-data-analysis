@@ -62,7 +62,7 @@ void Graph::printTree(std::ostream& s){
     std::sort(T.begin(), T.end());
     s << total << '\n';
     for(auto i : T){
-        s << actualNodeID[i.a] << '-' << actualNodeID[i.b] << ' ';
+        s << nodeIDTranslation(i.a) << '-' << nodeIDTranslation(i.b) << ' ';
     }
     s << '\n';
 }

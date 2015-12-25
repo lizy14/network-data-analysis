@@ -10,44 +10,49 @@
 
 #include <iostream>
 #include <fstream>
+#include <iomanip>
 #include "Graph.h"
 
 using namespace std;
 #define DEBUG_TIMING
 int test(std::istream& ins, std::ostream& outs){
-#ifdef DEBUG_TIMING
-    system("PrintDateAndTime");
-#endif
-    cout << "Loading graph...";
+
+    outs << setprecision(10);
+
+    cout << "Loading graph...\n";
 
     Graph graph;
     graph.read(ins);
 
-#ifdef DEBUG_TIMING
-    system("PrintDateAndTime");
-#endif
-    cout << "Generating minimal spanning tree...";
+
+    cout << "Generating minimal spanning tree...\n";
 
     outs << "Minimal spanning tree:\n";
     graph.printMinimalSpanningTree(outs);
     
-#ifdef DEBUG_TIMING
-    system("PrintDateAndTime");
-#endif
-    cout << "Calculating shortest graph...";
+
+    cout << "Calculating shortest graph...\n";
 
     outs << "Shortest path:\n";
     graph.printAllShortestPaths(outs);
+    
 
-#ifdef DEBUG_TIMING
-    system("PrintDateAndTime");
-#endif
-    cout << "All done.";
+    cout << "Printing translation...\n";
+
+    outs << "Node ID translation:\n";
+    graph.printTranslationTable(outs);
+
+    cout << "All done.\n";
 
     return 0;
 }
 int main(){
     std::ifstream infile("input.txt");
+    if(!infile)
+        return cout << "Error opening `input.txt`!", -1;
     std::ofstream outfile("output.txt");
+    if(!outfile)
+        return cout << "Error opening `output.txt`!", -1;
+
     return test(infile, outfile) || system("pause");
 }

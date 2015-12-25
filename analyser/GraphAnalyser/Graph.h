@@ -37,7 +37,16 @@ private:
     nodeID cntAssignedNodes;
     std::vector<actualID> actualNodeID;
     std::map<actualID, nodeID> map;
-    
+public:
+    actualID nodeIDTranslation(nodeID i){
+        return i;
+        return actualNodeID[i];
+    }
+    void printTranslationTable(std::ostream& s){
+        for(auto i : map){
+            s << i.first << ' ' << i.second << '\n';
+        }
+    }
 
 
 public:
