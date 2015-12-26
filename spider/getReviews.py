@@ -67,7 +67,7 @@ def getReviews(movieID):
         print("Loading %d: %d of %d" % (movieID, startID, numberOfReviews))
         page = getPage(movieID, startID)
         reviews += parsePage(page)
-        time.sleep(10)
+        time.sleep(2)
 
     print("Finishing %d" % movieID)
     return reviews
