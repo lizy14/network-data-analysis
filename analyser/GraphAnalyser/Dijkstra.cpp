@@ -87,10 +87,10 @@ void Graph::printAllShortestPaths(std::ostream& s){
             s << nodeIDTranslation(j) << "-" << nodeIDTranslation(i) << ": ";
             weight length = getPathLength(endingPoint);
             if(length>=Graph::INFINITY){
-                s << "NO PATH\n\n";
+                s << "NO PATH\n";
                 continue;
             }
-            s << length << '\n';
+            s << length << ", ";
             s << nodeIDTranslation(startingPoint) << "-";
             std::vector<int> path = getPath(endingPoint);
             for(auto i : path){
