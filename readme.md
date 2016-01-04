@@ -8,7 +8,7 @@
 
 值得一提的成果，是用聚类算法对[豆瓣电影TOP250榜单](http://movie.douban.com/top250)进行了不依赖已有知识的自动分类。
 
-![聚类结果可视化](https://github.com/lizy14/network-data-analysis/blob/master/presenter/CommunityStructure.png?raw=true)
+<img alt="聚类结果可视化" src="https://github.com/lizy14/network-data-analysis/blob/master/presenter/CommunityStructure.png?raw=true" width="500"/>
 
 1. 无耻混蛋, 禁闭岛, 盗梦空间, 机器人总动员, 贫民窟的百万富翁, 记忆碎片, 让子弹飞, 本杰明·巴顿奇事, 朗读者, 致命魔术, 阿凡达, 穆赫兰道, 蝙蝠侠：黑暗骑士, 飞屋环游记, 当幸福来敲门, 撞车, 入殓师, 三傻大闹宝莱坞, 天堂电影院, 搏击俱乐部, 黑天鹅, 窃听风暴, 国王的演讲, 月球, 蝴蝶效应, 鬼子来了, 大鱼, 玛丽和马克思, V字仇杀队, 源代码, 岁月神偷, 一一, 放牛班的春天, 暖暖内含光, 这个男人来自地球, 恐怖游轮, 海上钢琴师, 告白, 香水, 真爱至上, 大话西游之大圣娶亲, 死亡诗社, 浪潮, 断背山, 人工智能, 楚门的世界, 荒野生存, 恋恋笔记本, 忠犬八公的故事, 傲慢与偏见, 曾经, 蝙蝠侠：黑暗骑士崛起, 初恋这件小事, 廊桥遗梦, 爱在暹罗;
 
