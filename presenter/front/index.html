@@ -1,0 +1,71 @@
+﻿<html>
+<head>
+<meta charset="UTF-8">
+ 
+ <link rel="stylesheet" href="myStyle.css">
+<script src="sigma.min.js"></script>
+<script src="sigma.parsers.json.min.js"></script>
+<script src="sigma.plugins.animate.min.js"></script>
+<script src="sigma.plugins.dragNodes.min.js"></script>
+<script src="sigma.plugins.filter.min.js"></script>
+<script src="sigma.layout.forceAtlas2.min.js"></script>
+<script src="jquery1.8.3.min.js"></script>
+
+<script src="Nodes.js"></script>
+<script src="Movies.js"></script>
+<script src="MininalSpanningTree.js"></script>
+<script src="ShortestPath.js"></script>
+<script src="graph.js"></script>
+
+
+</head>
+<body>
+<div id="toolbar">
+<hr>
+<div id="layout_selector_div">
+    <label>显示最小生成树</label>
+    <div>
+        <button onclick="showTree();s.startForceAtlas2();">开始</button>
+        <button onclick="s.stopForceAtlas2();">停止动画</button>
+    </div>
+</div>
+<hr>
+<div id="node_info"></div>
+	<label onclick="$('#node_info_list').slideToggle()">节点信息</label>
+	<div id="node_info_list" style="margin:1em">
+	<div class="block_info">单击节点以查看其详细信息。</div>
+</div>
+<hr>
+<div>
+    <label onclick="$('#shortest_path').slideToggle()">节点对最短路径查询</label>
+    <div style="margin:1em">
+        <input id="a" value="N10"/>
+        <input id="b" value="N178"/>
+        <button onclick="doPath();">查询</button>
+    </div>
+    <div id="shortest_path"></div>
+</div>
+<hr>
+<label onclick="$('#how_to_use').slideToggle()">操作说明</label> | <label onclick="$('#about_').slideToggle()">关于</label>
+<div id="how_to_use" class="block_info">
+
+* 使用按钮开始或停止布局。<br>
+* 使用鼠标滚轮来缩放。<br>
+* 拖动空白处来平移。<br>
+* 拖动节点来改变其位置。（只能在动画停止状态下拖动，且拖动后需要重新调整缩放才能平移视图。）<br>
+</div>
+<div id="about_" class="block_info">
+
+* By Zhaoyang, THSS. 2015.12.<br>
+* Libraries: <br>
+- <a href_="http://jquery.com/">jQuery</a> 1.8.3, <br>
+- <a href_="http://sigmajs.org/">sigmajs</a> 1.0.3. <br>
+* No right(s) reserved.<br>
+
+</div>
+</div>
+<div id="graph_container"></div>
+<script src="myScript.js"></script>
+
+</body>
+</html>
